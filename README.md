@@ -25,6 +25,16 @@ bun run build
 ./dist/fix-helium-drm
 ```
 
+### Re-applying after Helium updates (Windows)
+
+Each Helium update installs into a new version folder without WidevineCdm. To re-run the fix automatically, register a scheduled task that checks at logon and hourly:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\install-task.ps1
+```
+
+It only runs the fixer when a version folder is missing WidevineCdm, and logs to `%LOCALAPPDATA%\helium-drm-fixer\auto-fix.log`. Remove it with `Unregister-ScheduledTask -TaskName HeliumDrmAutoFix`.
+
 ## How It Works
 
 1. **Finds Chrome WidevineCdm**: The tool searches for your Chrome (or other Chromium-based browser) installation and locates the WidevineCdm directory.
